@@ -1,0 +1,31 @@
+<svg width="160" height="140" viewBox="0 0 160 140" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="glow-red">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <g filter="url(#glow-red)">
+    <!-- Back Bubble Tail -->
+    <path d="M 30 75 L 15 100 L 45 75 Z" fill="black" stroke="#ff1111" stroke-width="5" stroke-linejoin="round" />
+    <polygon points="28,75 47,75 15,100" fill="black" />
+    
+    <!-- Back Bubble Body -->
+    <rect x="10" y="10" width="100" height="65" rx="15" ry="15" fill="black" stroke="#ff1111" stroke-width="5" />
+    <!-- Hide the inner line of the tail with a black line -->
+    <line x1="33" y1="75" x2="42" y2="75" stroke="black" stroke-width="8" />
+
+    <!-- Front Bubble Tail -->
+    <path d="M 130 105 L 145 130 L 115 105 Z" fill="black" stroke="#ff1111" stroke-width="5" stroke-linejoin="round" />
+    <polygon points="128,105 113,105 145,130" fill="black" />
+    
+    <!-- Front Bubble Body -->
+    <rect x="40" y="40" width="110" height="65" rx="15" ry="15" fill="black" stroke="#ff1111" stroke-width="5" />
+    <!-- Hide the inner line of the tail -->
+    <line x1="117" y1="105" x2="128" y2="105" stroke="black" stroke-width="8" />
+  </g>
+</svg>
