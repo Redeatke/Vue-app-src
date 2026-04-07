@@ -1,0 +1,1 @@
+{"_id":"69c9dece21962120198a06c1","firstName":"red","lastName":"keb","email":"rkebede@eagles.bridgewater.edu","username":"rkebede","chat_sessions":[],"requests":[],"friends":[{"username":"red12","userId":"69cb522121962120198a0986","_id":"69cb546e21962120198a09b2"}]}
