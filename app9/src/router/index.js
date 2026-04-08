@@ -6,6 +6,7 @@ import SignInView from '@/views/SignInView.vue'
 import MainView from '@/views/MainView.vue'
 import ChatView from '@/views/ChatView.vue'
 import FriendsView from '@/views/FriendsView.vue'
+import ProfileView from '@/views/ProfileView.vue'
 
 // Reactive route error message — used by App.vue to display invalid route feedback
 import { ref } from 'vue'
@@ -43,6 +44,11 @@ const router = createRouter({
           path: 'friends',
           name: 'friends',
           component: FriendsView,
+        },
+        {
+          path: 'profile',
+          name: 'profile',
+          component: ProfileView,
         },
       ],
     },
