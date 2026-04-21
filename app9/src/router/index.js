@@ -4,9 +4,10 @@ import LandingView from '@/views/LandingView.vue'
 import CreateAccountView from '@/views/CreateAccountView.vue'
 import SignInView from '@/views/SignInView.vue'
 import MainView from '@/views/MainView.vue'
-import ChatView from '@/views/ChatView.vue'
 import FriendsView from '@/views/FriendsView.vue'
 import ProfileView from '@/views/ProfileView.vue'
+import GroupsView from '@/views/GroupsView.vue'
+import GroupChatView from '@/views/GroupChatView.vue'
 
 // Reactive route error message — used by App.vue to display invalid route feedback
 import { ref } from 'vue'
@@ -36,11 +37,6 @@ const router = createRouter({
       component: MainView,
       children: [
         {
-          path: 'chat/:friendUsername',
-          name: 'chat',
-          component: ChatView,
-        },
-        {
           path: 'friends',
           name: 'friends',
           component: FriendsView,
@@ -49,6 +45,16 @@ const router = createRouter({
           path: 'profile',
           name: 'profile',
           component: ProfileView,
+        },
+        {
+          path: 'groups',
+          name: 'groups',
+          component: GroupsView,
+        },
+        {
+          path: 'groups/:chatId',
+          name: 'groupChat',
+          component: GroupChatView,
         },
       ],
     },

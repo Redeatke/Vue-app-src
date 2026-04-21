@@ -25,6 +25,7 @@ async function handleSignOut() {
     <div class="nav-left">
       <RouterLink v-if="isLoggedIn" to="/main" class="link">Home</RouterLink>
       <RouterLink v-if="isLoggedIn" to="/main/friends" class="link">Friends</RouterLink>
+      <RouterLink v-if="isLoggedIn" to="/main/groups" class="link">Chats</RouterLink>
     </div>
     <div class="nav-right">
       <!-- Profile avatar pill (only when logged in) -->
