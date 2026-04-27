@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import { useChatStore } from '@/stores/chat'
@@ -77,8 +77,21 @@ const isInviting = ref(false)
 const isLeaving = ref(false)
 const showLeaveModal = ref(false)
 
+let pollInterval = null
+
 onMounted(async () => {
   await loadChat()
+  
+  // Set up polling every 5 seconds
+  pollInterval = setInterval(async () => {
+    await loadChat()
+  }, 5000)
+})
+
+onUnmounted(() => {
+  if (pollInterval) {
+    clearInterval(pollInterval)
+  }
 })
 
 async function loadChat() {
@@ -167,6 +180,14 @@ function myMessage(msg) {
 function senderName(msg) {
   return resolveSender(msg.sender ?? msg.from) ?? 'Unknown'
 }
+
+function formatTime(msg) {
+  const ts = msg.timestamp || msg.createdAt || msg.created_at
+  if (!ts) return ''
+  const date = new Date(ts)
+  if (isNaN(date.getTime())) return ''
+  return date.toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+}
 </script>
 
 <template>
@@ -196,8 +217,11 @@ function senderName(msg) {
             class="message"
             :class="{ mine: myMessage(msg) }"
           >
-            <strong>{{ senderName(msg) }}</strong>
-            <span>{{ msg.message ?? msg.text ?? msg.content }}</span>
+            <div class="message-header">
+              <strong>{{ senderName(msg) }}</strong>
+              <span v-if="formatTime(msg)" class="timestamp">{{ formatTime(msg) }}</span>
+            </div>
+            <span class="message-body">{{ msg.message ?? msg.text ?? msg.content }}</span>
           </div>
         </div>
 
@@ -361,11 +385,22 @@ function senderName(msg) {
   width: fit-content;
   max-width: 75%;
 }
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
 .message strong {
   font-size: 0.8em;
   color: #888;
 }
-.message span {
+.timestamp {
+  font-size: 0.7em;
+  color: #666;
+  white-space: nowrap;
+}
+.message-body {
   font-size: 0.95em;
   color: #eee;
 }
@@ -376,6 +411,9 @@ function senderName(msg) {
 }
 .message.mine strong {
   color: #ff8888;
+}
+.message.mine .timestamp {
+  color: #aa6666;
 }
 .empty {
   color: #555;

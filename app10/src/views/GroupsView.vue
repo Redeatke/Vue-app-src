@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useChatStore } from '@/stores/chat'
 
@@ -11,9 +11,23 @@ const createFeedback = ref('')
 const isCreating = ref(false)
 const inviteFeedback = ref('')
 
+let pollInterval = null
+
 onMounted(async () => {
   await chatStore.getMyChats()
   await chatStore.getInvitations()
+  
+  // Set up polling every 5 seconds
+  pollInterval = setInterval(async () => {
+    await chatStore.getMyChats()
+    await chatStore.getInvitations()
+  }, 5000)
+})
+
+onUnmounted(() => {
+  if (pollInterval) {
+    clearInterval(pollInterval)
+  }
 })
 
 async function createChat() {

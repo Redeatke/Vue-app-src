@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useUserStore } from '@/stores/user'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 
@@ -13,8 +13,21 @@ const isLoading = ref(false)
 const showRemoveModal = ref(false)
 const friendToRemove = ref(null)
 
+let pollInterval = null
+
 onMounted(() => {
   userStore.getFriendRequests()
+  
+  // Set up polling every 5 seconds
+  pollInterval = setInterval(() => {
+    userStore.getFriendRequests()
+  }, 5000)
+})
+
+onUnmounted(() => {
+  if (pollInterval) {
+    clearInterval(pollInterval)
+  }
 })
 
 async function addFriend() {
